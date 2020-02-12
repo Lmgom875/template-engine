@@ -1,10 +1,10 @@
 const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
+const htmlBuilder = require("./output/HTMLBuilder");
 const inquirer = require("inquirer");
 
 let team = []
-
 
 function managerInput() {
     inquirer.prompt([
@@ -34,10 +34,7 @@ function managerInput() {
     ]).then(resp => {
         team.push(new Manager(resp.manager, resp.id, resp.email, resp.office))
         teamImput();
-        // llamar a otra funcion para crear el team
     })
-
-
 }
 
 function engineerInput() {
@@ -64,7 +61,6 @@ function engineerInput() {
     ]).then(resp => {
         team.push(new Engineer(resp.engineer, resp.id, resp.email, resp.username))
         teamImput();
-        // llamar a otra funcion para crear el team
     })
 }
 
@@ -92,7 +88,6 @@ function internInput() {
     ]).then(resp => {
         team.push(new Intern(resp.intern, resp.id, resp.email, resp.uniName))
         teamImput();
-        // llamar a otra funcion para crear el team
     })
 }
 
@@ -116,24 +111,9 @@ function teamImput() {
         } else if (resp.role === 'Intern') {
             internInput();
         } else {
-            console.log(team);
             console.log("end of team creation");
-            console.log("BYE");
-
+            htmlBuilder.generateHTML(team);
         }
     })
-    // crear inter or eng or finish 
-
-    //  intern crear 
-    // si es Eng crear
-    // si es finish build the html
 }
-
-
-function buildHtml() {
-
-    //loop array team llamando a los distinto templates    // role = [i].getRole() switch 
-    //al final del loop escribir el html con fw.writefile
-}
-
 managerInput()
